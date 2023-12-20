@@ -32,6 +32,8 @@ export async function POST(req: Request) {
             return new Response("User not found", { status: 404 })
         }
 
+        user.password = ""
+
         return new Response(JSON.stringify(user), {
             status: 200,
             headers: {
