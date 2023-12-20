@@ -1,4 +1,5 @@
 import db from '@/libs/db';
+import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -14,12 +15,18 @@ export async function POST(req: Request) {
         })
 
         if (!user) {
+            console.log("User not found")
             return new NextResponse("User not found", { status: 404 })
         }
 
-        if (user.password !== body.password) {
-            return new NextResponse("Wrong password", { status: 401 })
+        const match = await bcrypt.compare(body.password, user.password)
+
+        if (!match) {
+            console.log("Password does not match")
+            return new NextResponse("Password does not match", { status: 401 })
         }
+
+        user.password = ""
 
         return new NextResponse(JSON.stringify(user), {
             status: 200,
@@ -29,6 +36,7 @@ export async function POST(req: Request) {
         })
 
     } catch (error) {
+        console.log(error)
         return new NextResponse("Something went wrong", { status: 500 })
     }
 }
