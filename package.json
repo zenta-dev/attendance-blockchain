@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "clean": "rimraf dist .next"
+    "clean": "rimraf dist .next",
+    "generate": "prisma generate",
+    "postinstall": "pnpm run generate"
   },
   "dependencies": {
     "@prisma/client": "5.7.1",
