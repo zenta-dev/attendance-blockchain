@@ -9,7 +9,8 @@
     "lint": "next lint",
     "clean": "rimraf dist .next",
     "generate": "prisma generate",
-    "postinstall": "pnpm run generate"
+    "db:push": "prisma db push",
+    "postinstall": "pnpm run db:push && pnpm run generate"
   },
   "dependencies": {
     "@prisma/client": "5.7.1",
