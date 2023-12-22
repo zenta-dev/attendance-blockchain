@@ -10,6 +10,8 @@ export class Block {
         public createdAt: number,
         public data: string,
         public name: string,
+        public identity: string,
+        public reason: string,
     ) {
         this.nonce = 0;
         this.hash = this.calculateHash();
@@ -37,7 +39,7 @@ export class Blockchain {
     }
 
     createGenesisBlock(): Block {
-        return new Block(0, "0", Date.now(), "Genesis Block", "Genesis Block");
+        return new Block(0, "0", Date.now(), "Genesis Block", "Genesis Block", "Genesis Block", "Genesis Block");
     }
 
     getLatestBlock(): Block {

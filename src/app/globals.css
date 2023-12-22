@@ -46,6 +46,25 @@ img {
   max-width: 100%;
   height: auto;
 }
+.block-list-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.block-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.block-item {
+  border: 1px solid #ccc;
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  backdrop-filter: blur(50px);
+}
 
 /*=============== LOGIN ===============*/
 .login {

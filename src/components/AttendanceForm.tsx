@@ -37,7 +37,7 @@ export const AttendanceForm = () => {
             <BlockList data={chat.messages} />
 
             <form className="login__form" onSubmit={handleSubmit}>
-                <h1 className="login__title">CHECK IN</h1>
+                <h1 className="login__title">Absensi</h1>
 
                 <div className="login__content">
                     <div className="login__box">
@@ -57,9 +57,7 @@ export const AttendanceForm = () => {
                         <div className="login__box-input">
                             <input
                                 type="text"
-                                required
                                 className="login__input"
-                                id="login-email"
                                 placeholder=" "
                                 onChange={(e) => setIdentity(e.target.value)}
                             />
@@ -72,9 +70,7 @@ export const AttendanceForm = () => {
                         <div className="login__box-input">
                             <input
                                 type="text"
-                                required
                                 className="login__input"
-                                id="login-email"
                                 placeholder=" "
                                 onChange={(e) => setReason(e.target.value)}
                             />

@@ -20,6 +20,8 @@ const blockChain = new Blockchain();
         await db.block.create({
             data: {
                 name: "Genesis Block",
+                identity: "0",
+                reason: "Genesis Block",
                 hash: blockChain.getLatestBlock().hash,
                 data: "Genesis Block",
                 prevHash: blockChain.getLatestBlock().previousHash,
@@ -28,7 +30,7 @@ const blockChain = new Blockchain();
     } else if (dbLen > bcLen) {
         const dbBlocks = await db.block.findMany();
         dbBlocks.forEach((block) => {
-            blockChain.addBlock(new Block(blockChain.chain.length, block.hash, Date.now(), block.data, block.name));
+            blockChain.addBlock(new Block(blockChain.chain.length, block.hash, Date.now(), block.data, block.name, block.identity, block.reason));
         })
     } else if (dbLen < bcLen) {
         const dbBlocks = await db.block.findMany();
@@ -38,6 +40,8 @@ const blockChain = new Blockchain();
                 await db.block.create({
                     data: {
                         name: block.name,
+                        identity: block.identity,
+                        reason: block.reason,
                         hash: block.hash,
                         data: block.data,
                         prevHash: block.previousHash,
@@ -49,6 +53,8 @@ const blockChain = new Blockchain();
 
 
 })()
+
+
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     if (!res.socket.server.io) {
@@ -64,12 +70,14 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
                 console.log("message", message);
                 const length = blockChain.chain.length;
                 const data = JSON.stringify(message);
-                blockChain.addBlock(new Block(blockChain.chain.length, blockChain.getLatestBlock().hash, Date.now(), data, message.name));
+                blockChain.addBlock(new Block(blockChain.chain.length, blockChain.getLatestBlock().hash, Date.now(), data, message.name, message.identity, message.reason));
                 const newLength = blockChain.chain.length;
                 if (length < newLength) {
                     const blockDB = await db.block.create({
                         data: {
                             name: message.name,
+                            identity: message.identity,
+                            reason: message.reason,
                             hash: blockChain.getLatestBlock().hash,
                             data: data,
                             prevHash: blockChain.getLatestBlock().previousHash,

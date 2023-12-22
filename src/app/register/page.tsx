@@ -2,13 +2,15 @@
 import { User } from "@prisma/client";
 import {
     RiLock2Line,
-    RiUser3Line
+    RiUser2Fill,
+    RiUser3Line,
 } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function RegisterPage() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
@@ -17,7 +19,7 @@ export default function RegisterPage() {
         e.preventDefault();
         const res = await fetch('/api/register', {
             method: 'POST',
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, name }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -35,43 +37,60 @@ export default function RegisterPage() {
     };
 
     return (
-        <form className="login__form" onSubmit={handleLogin}>
-            <h1 className="login__title">Register</h1>
+        <div className="login" id="login">
+            <form className="login__form" onSubmit={handleLogin}>
+                <h1 className="login__title">Register</h1>
 
-            <div className="login__content">
-                <div className="login__box">
-                    <RiUser3Line className="login__icon" />
+                <div className="login__content">
+                    <div className="login__box">
+                        <RiUser2Fill className="login__icon" />
 
-                    <div className="login__box-input">
-                        <input
-                            type="email"
-                            required
-                            className="login__input"
-                            id="login-email"
-                            placeholder=" "
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <label className="login__label">Email</label>
+                        <div className="login__box-input">
+                            <input
+                                type="text"
+                                required
+                                className="login__input"
+                                id="login-email"
+                                placeholder=" "
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <label className="login__label">Name</label>
+                        </div>
+                    </div>
+                    <div className="login__box">
+                        <RiUser3Line className="login__icon" />
+
+                        <div className="login__box-input">
+                            <input
+                                type="email"
+                                required
+                                className="login__input"
+                                id="login-email"
+                                placeholder=" "
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <label className="login__label">Email</label>
+                        </div>
+                    </div>
+
+                    <div className="login__box">
+                        <RiLock2Line className="login__icon" />
+                        <div className="login__box-input">
+                            <input
+                                type="password"
+                                required
+                                className="login__input"
+                                id="login-pass"
+                                placeholder=" "
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <label className="login__label">Sandi</label>
+                        </div>
                     </div>
                 </div>
 
-                <div className="login__box">
-                    <RiLock2Line className="login__icon" />
-                    <div className="login__box-input">
-                        <input
-                            type="password"
-                            required
-                            className="login__input"
-                            id="login-pass"
-                            placeholder=" "
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label className="login__label">Sandi</label>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" className="login__button">Register</button>
-        </form>
+                <button type="submit" className="login__button">Register</button>
+            </form>
+        </div>
     )
 }
